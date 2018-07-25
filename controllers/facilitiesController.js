@@ -1,19 +1,27 @@
-//var soda = require('../lib/soda-js');
+var request = require('request');
 
 module.exports = {
   findAll: function (req, res) {
 
-    // var consumer = new soda.Consumer('https://data.sfgov.org/resource/sipz-fjte.json?business_id=68483');
-
-    // consumer.query()
-    //   .on('success', function (rows) { console.log("rows", rows); })
-    //   .on('error', function (error) { console.error(error); });
-
-    console.log("Controller");
-    return res.json("hello");
+    request('https://data.sfgov.org/resource/sipz-fjte.json', { json: true }, (err, apiResponse, body) => {
+      if (err) { 
+        res.json({'error': err});
+      } else {
+        res.json(apiResponse);
+      }
+    }); 
   },
   findById: function (req, res) {
 
+    var url = 'https://data.sfgov.org/resource/sipz-fjte.json?business_id=' + req.params.id;
+
+    request(url, { json: true }, (err, apiResponse, body) => {
+      if (err) { 
+        res.json({'error': err});
+      } else {
+        res.json(apiResponse);
+      }
+    });
   },
   create: function (req, res) {
 
