@@ -2,13 +2,9 @@ var request = require('request');
 
 module.exports = {
   findAll: function (req, res) {
-    console.log("Find All");
-
     // check if query is included, if so run
     // findByQuery function defined further below
     if (req.query.q) {
-      console.log("Find by query", req.query.q);
-
       module.exports.findByQuery(req, res);
       return;
     }
@@ -22,7 +18,6 @@ module.exports = {
     }); 
   },
   findById: function (req, res) {
-    console.log("Find by ID");
     const url = 'https://data.sfgov.org/resource/sipz-fjte.json?business_id=' + req.params.id;
 
     request(url, { json: true }, (err, apiResponse, body) => {
@@ -40,7 +35,6 @@ module.exports = {
       if (err) {
         res.json({'error': err});
       } else {
-        // console.log(apiResponse);
         const businessesById = mergeBusinessesByInspections(body);
         res.json(businessesById);
       }
@@ -59,7 +53,6 @@ module.exports = {
 
 // functions used by findByQuery
 const mergeBusinessesByInspections = (businesses) => {
-  console.log("Merging happening!!");
   const businessesById = {};
 
   for (let currentBusiness of businesses) {
