@@ -9,5 +9,5 @@ router.route("/")
 router
   .route("/:id")
   .get(facilitiesController.findById);
-
+  
 module.exports = router;
