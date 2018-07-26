@@ -8,6 +8,9 @@ module.exports = {
   findById: function(req, res) {
    
   },
+  findByQuery: function(req, res) {
+    return axios.get("/api/facilities?q=" + req.query.q);
+  },
   create: function(req, res) {
     
   },
