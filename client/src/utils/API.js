@@ -5,8 +5,8 @@ module.exports = {
   findAll: function(req, res) {
     return axios.get("/api/facilities");
   },
-  findById: function(req, res) {
-   
+  findById: function(id) {
+    return axios.get("/api/facilities/" + id);
   },
   create: function(req, res) {
     

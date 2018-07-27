@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import Results from "./pages/Results";
+
 import './App.css';
+
+
 
 class App extends Component {
   render() {
@@ -15,6 +19,7 @@ class App extends Component {
         </p>
         <h1>Test</h1>
         <h1>Test_1</h1>
+        <Results />
       </div>
     );
   }
