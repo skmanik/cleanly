@@ -8,11 +8,18 @@ class Results extends Component {
     state = {
         options: {
             title: "My Daily Activities",
-            pieHole: 27,
+            pieHole: 30,
             is3D: true
         }
     };
 
+    componentDidMount() {
+
+        console.log(this.props.match.params.id);
+        // API.getBook(this.props.match.params.id)
+        //   .then(res => this.setState({ book: res.data }))
+        //   .catch(err => console.log(err));
+      }
 
     render() {
         return (
