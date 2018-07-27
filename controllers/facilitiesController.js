@@ -1,4 +1,4 @@
-var request = require('request');
+const request = require('request');
 
 module.exports = {
   findAll: function (req, res) {
