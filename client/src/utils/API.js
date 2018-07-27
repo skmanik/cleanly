@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Defining methods for the FacilitiesController
-module.exports = {
+export default {
   findAll: function(req, res) {
     return axios.get("/api/facilities");
   },

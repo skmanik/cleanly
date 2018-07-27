@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import API from "../../utils/API";
 
-const NoMatch = () => (
-  <h1>404 Page Not Found</h1>
+const Detail = () => (
+  <h1>Details of Specific Result</h1>
 );
 
-export default NoMatch;
+export default Detail;
