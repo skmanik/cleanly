@@ -10,21 +10,22 @@ module.exports = {
     }
 
     request('https://data.sfgov.org/resource/sipz-fjte.json', { json: true }, (err, apiResponse, body) => {
-      if (err) { 
-        res.json({'error': err});
+      if (err) {
+        res.json({ 'error': err });
       } else {
         res.json(apiResponse);
       }
-    }); 
+    });
   },
   findById: function (req, res) {
     const url = 'https://data.sfgov.org/resource/sipz-fjte.json?business_id=' + req.params.id;
 
     request(url, { json: true }, (err, apiResponse, body) => {
-      if (err) { 
-        res.json({'error': err});
+      if (err) {
+        res.json({ 'error': err });
       } else {
-        res.json(apiResponse);
+        const detailsById = mergeDetailsById(body);
+        res.json(detailsById);
       }
     });
   },
@@ -33,7 +34,7 @@ module.exports = {
 
     request(url, { json: true }, (err, apiResponse, body) => {
       if (err) {
-        res.json({'error': err});
+        res.json({ 'error': err });
       } else {
         const businessesById = mergeBusinessesByInspections(body);
         res.json(businessesById);
@@ -81,4 +82,40 @@ const mergeBusinessesByInspections = (businesses) => {
   }
 
   return businessesById;
+}
+
+
+const mergeDetailsById = (businesses) => {
+  const violetionDescription = [];
+  let average = 0;
+  let totalItems = 0;
+  let name;
+
+  for (let currentBusiness of businesses) {
+    name = currentBusiness.business_name;
+
+    if (typeof currentBusiness.inspection_score != 'undefined') {
+      console.log(currentBusiness.inspection_score);
+      average = average + parseInt(currentBusiness.inspection_score);
+      totalItems++;
+    }
+    if (currentBusiness.violation_description != null) {
+      console.log(currentBusiness.violation_description);
+      violetionDescription.push(currentBusiness.violation_description);
+    }
+  }
+
+  console.log("average", average);
+  console.log("totalItems", totalItems);
+
+  average = (average / totalItems).toFixed(2);
+
+  const details = {
+    name: name,
+    average: average,
+    violetionDescription: violetionDescription
+  }
+
+
+  return details;
 }
