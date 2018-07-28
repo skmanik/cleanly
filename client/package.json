@@ -2,12 +2,18 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
+    "axios": "^0.16.2",
+    "eslint": "^5.2.0",
+    "prop-types": "^15.6.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14",
+    "react-donut-chart": "^1.1.7",
+    "react-google-charts": "^2.0.16",
     "react-router-dom": "^4.1.2",
-    "axios": "^0.16.2"
+    "react-scripts": "1.0.14",
+    "react-svg-donut-chart": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
