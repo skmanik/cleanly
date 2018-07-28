@@ -6,7 +6,7 @@ export default {
     return axios.get("/api/facilities");
   },
   findById: function(id) {
-    console.log("API", id)
+    console.log("API", id);    
     return axios.get("/api/facilities/" + id);
   },
   findByQuery: function(req, res) {    

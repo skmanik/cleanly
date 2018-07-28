@@ -4,10 +4,9 @@ import React from "react";
 export const Table = ({ children }) => (
     <div>
         <table>
-            <tr>
+            <tbody>
                 {children}
-            </tr>
+            </tbody>
         </table>
-
     </div>
 );

@@ -86,7 +86,7 @@ const mergeBusinessesByInspections = (businesses) => {
 
 
 const mergeDetailsById = (businesses) => {
-  const violetionDescription = [];
+  const violationDescription = [];
   let average = 0;
   let totalItems = 0;
   let name;
@@ -95,27 +95,23 @@ const mergeDetailsById = (businesses) => {
     name = currentBusiness.business_name;
 
     if (typeof currentBusiness.inspection_score != 'undefined') {
-      console.log(currentBusiness.inspection_score);
       average = average + parseInt(currentBusiness.inspection_score);
       totalItems++;
     }
     if (currentBusiness.violation_description != null) {
-      console.log(currentBusiness.violation_description);
-      violetionDescription.push(currentBusiness.violation_description);
+      violationDescription.push(currentBusiness.violation_description);
     }
   }
-
-  console.log("average", average);
-  console.log("totalItems", totalItems);
 
   average = (average / totalItems).toFixed(2);
 
   const details = {
     name: name,
     average: average,
-    violetionDescription: violetionDescription
+    violationDescription: violationDescription
   }
 
+  console.log("Details", details);
 
   return details;
 }

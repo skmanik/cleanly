@@ -2,9 +2,9 @@
 import React from "react";
 
 export const Row = ({ children }) => (
-    <div>
-        <td>
+        <tr>
+            <td>
             {children}
-        </td>
-    </div>
+            </td>
+        </tr>
 );
