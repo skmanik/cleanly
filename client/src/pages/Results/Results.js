@@ -6,7 +6,9 @@ import API from "../../utils/API";
 import "./Results.css";
 
 class Results extends Component {
-	state = {};
+	state = {
+		businesses: [],
+	};
 
 	componentDidMount() {
 		// API stuff
@@ -18,7 +20,21 @@ class Results extends Component {
 		const searchPath = "/results?q=" + query;
 		const encodedPath = encodeURI(searchPath);
 
+		// this just lets the user know in URL bar what's being searched
 		this.props.history.push(encodedPath);
+
+		this.updateResults(query);
+	};
+
+	updateResults = query => {
+		console.log("Results are being updated");
+
+		API.findByQuery(query)
+		.then(res => {
+			this.setState({ businesses: res.data })
+			console.log(res.data);
+		})
+		.catch(err => console.log(err));
 	};
 
 	render() {
@@ -29,16 +45,16 @@ class Results extends Component {
 						<div className="container">
 							<h1 className="title">Results List</h1>
 							{/* A search bar like the one on the home page */}
-							<Search onSubmit={this.searchForBusiness} />
+							<Search onSearch={this.searchForBusiness} />
 						</div>
 					</div>
 				</section>
 				<section className="main section">
 					<div className="container">
-						{/* Cards will be generated here, here's an example */}
-						<Card />
-						<Card />
-						<Card />
+						{/* Cards will be generated here */}
+						{this.state.businesses.map(business => (
+							<Card key={business.id} business={business} />
+						))}
 					</div>
 				</section>
 			</div>

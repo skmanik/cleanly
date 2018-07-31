@@ -4,6 +4,8 @@ module.exports = {
   findAll: function (req, res) {
     // check if query is included, if so run
     // findByQuery function defined further below
+    console.log(req.query.q);
+
     if (req.query.q) {
       module.exports.findByQuery(req, res);
       return;
@@ -37,7 +39,13 @@ module.exports = {
         res.json({ 'error': err });
       } else {
         const businessesById = mergeBusinessesByInspections(body);
-        res.json(businessesById);
+        let businessesArr = [];
+
+        for (let business_id in businessesById) {
+          businessesArr.push(businessesById[business_id]);
+        }
+
+        res.json(businessesArr);
       }
     });
   },

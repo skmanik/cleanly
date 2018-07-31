@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./Search.css";
 
 class Search extends Component {
-
 	state = {
 		input: "",
 	};
@@ -18,7 +17,7 @@ class Search extends Component {
 		console.log("I added an on click!");
 		// this.props.history.push("/results?q=Hello");
 
-		this.props.onSubmit(this.state.input);
+		this.props.onSearch(this.state.input);
 	};
 
 	render() {
