@@ -9,8 +9,8 @@ export default {
     console.log("API", id);    
     return axios.get("/api/facilities/" + id);
   },
-  findByQuery: function(req, res) {    
-    return axios.get("/api/facilities?q=" + req.query.q);
+  findByQuery: function(query) {    
+    return axios.get("/api/facilities?q=" + encodeURI(query));
   },
   create: function(req, res) {
     
