@@ -27,7 +27,7 @@ class Detail extends Component {
       })
       .catch(err => console.log(err));
 
-  }
+  };
 
   openModal = (data) => {
     this.setState({
