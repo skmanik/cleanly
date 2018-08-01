@@ -2,7 +2,7 @@
 import React from "react";
 
 export const Table = ({ children }) => (
-    <div>
+    <div className="container">
         <table>
             <tbody>
                 {children}

@@ -111,7 +111,5 @@ const mergeDetailsById = (businesses) => {
     violationDescription: violationDescription
   }
 
-  console.log("Details", details);
-
   return details;
 }
