@@ -13,8 +13,7 @@
     "react-google-charts": "^2.0.16",
     "react-router-dom": "^4.1.2",
     "react-scripts": "1.0.14",
-    "react-svg-donut-chart": "^1.0.0",
-    "reactjs-popup": "^1.1.1"
+    "react-svg-donut-chart": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

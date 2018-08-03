@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import BarChart from "react-svg-bar-chart"
+import Tooltip from "react-simple-tooltip"
 import { Details, DonutChart, Table, Row } from "../../components/Details";
-import { Link } from "react-router-dom";
+// import { BarChart } from 'react-native-chart-kit'
 import API from "../../utils/API";
-import Card from "../../components/Card";
-import Popup from "reactjs-popup";
+
 import "./Detail.css";
+
 
 class Detail extends Component {
 
@@ -12,34 +14,74 @@ class Detail extends Component {
     name: "",
     average: 0,
     violationDescription: [],
-    open: false,
-    facility1: 1,
-    facility2: 2,
-    facility3: 3,
+    totalFacilities: [],
+    point: null,
+    tooltipTrigger: null
   };
 
   componentDidMount() {
+    this.getFacilityById();
+  };
+
+  getFacilityById() {
     API.findById(this.props.match.params.id)
       .then(res => {
-        this.setState({ name: res.data.name });
-        this.setState({ average: res.data.average });
-        this.setState({ violationDescription: res.data.violationDescription });
+        this.setState({
+          name: res.data.name,
+          average: res.data.average,
+          violationDescription: res.data.violationDescription,
+        }, () => {
+          this.totalFacilities();
+
+        });
+        // name still be null
       })
       .catch(err => console.log(err));
 
-  };
+    this.totalFacilities();
 
-  openModal = (data) => {
-    this.setState({
-      open: true,
-      popupData: data,
-    });
-  };
-  closeModal = () => {
-    this.setState({ open: false });
-  };
+  }
+
+  totalFacilities() {
+    console.log("name", this.state.name);
+    API.findByName(this.state.name)
+      .then(res => {
+
+        const info = res.data;
+
+        let data = []
+        for (let x = 0; x < info.length; x++) {
+
+          const address = info[x].business_address + ", " + info[x].business_city + ", " + info[x].business_state;
+          data.push({
+            address: address,
+            score: info[x].average,
+            x: x,
+            y: parseInt(info[x].average),
+            violation_description: info[x].violation_description,
+            active: true
+          })
+        }
+        this.setState({ totalFacilities: data });
+      })
+      .catch(err => console.log(err));
 
 
+  }
+
+  handlePointHover = (point, e) => {
+    if (e) {
+      this.setState({
+        tooltipTrigger: e.target.getBoundingClientRect(),
+        point: point,
+      })
+    } else {
+      this.setState({
+        tooltipTrigger: null,
+        point: null,
+      })
+    }
+  }
 
   render() {
     return (
@@ -51,59 +93,39 @@ class Detail extends Component {
           <DonutChart value={this.state.average} />
         </div>
         <Table>
-          {this.state.violationDescription.map(name => (
-            <Row>
-              {name}
+          {this.state.violationDescription.map(violation => (
+            <Row key={violation.inspection_id}>
+              {violation.violation_description}
             </Row>
           ))}
         </Table>
-        <section className="main section">
-          <div className="container" onClick={() => this.openModal(this.state.facility1)}>
-            {/* Cards will be generated here, here's an example */}
-            <Card />
-          </div>
+        <div
+          style={{
+            position: "relative",
+          }}
+        >
+          {this.state.tooltipTrigger ? (
+            <Tooltip
+              fixed
+              placement="top"
+              radius={10}
+              arrow={10}
 
-          <div className="container"  onClick={() => this.openModal(this.state.facility2)} >
-            <Card />
-          </div>
-
-          <div className="container"  onClick={() => this.openModal(this.state.facility3)}>
-            <Card />
-          </div>
-        </section>
-        <div>
-          {
-            this.state.open ? (
-              <div style={{position:"absolute"}}>
-                <div onClick={this.closeModal} style={{position: "fixed", backgroundColor: "rgba(0, 0, 0, 0.3)", height: "100vh", width: "100vw", top: 0, left: 0}}></div>
-                <div style={{position: "fixed", backgroundColor: "white", top: "40%"}}>
-                {this.state.popupData}
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae magni
-                omnis delectus nemo, maxime molestiae dolorem numquam mollitia, voluptate
-                ea, accusamus excepturi deleniti ratione sapiente! Laudantium, aperiam
-                doloribus. Odit, aut.
-                </div>
-              </div>
-
-            ) : null
-          }
-          {/*
-          <Popup
-            open={this.state.open}
-            closeOnDocumentClick
-            onClose={this.closeModal}
-          >
-            <div className="modal">
-              <a className="close" onClick={this.closeModal}>
-                &times;
-              </a>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae magni
-              omnis delectus nemo, maxime molestiae dolorem numquam mollitia, voluptate
-              ea, accusamus excepturi deleniti ratione sapiente! Laudantium, aperiam
-              doloribus. Odit, aut.
-            </div>
-          </Popup>
-          */}
+              style={{
+                position: "fixed",
+                top: this.state.tooltipTrigger.top + "px",
+                left:
+                  this.state.tooltipTrigger.left +
+                  (this.state.tooltipTrigger.right - this.state.tooltipTrigger.left) / 2 +
+                  "px",
+              }}
+              content={this.state.point.address + "  " + this.state.point.score+"%"}
+            />
+          ) : null}
+          <BarChart data={this.state.totalFacilities} onHover={this.handlePointHover}
+            labelsVisible={false}
+            gridVisible={false}
+            axisOpacity={0.5} />
         </div>
       </div>
     )

@@ -12,6 +12,10 @@ export default {
   findByQuery: function(query) {    
     return axios.get("/api/facilities?q=" + encodeURI(query));
   },
+  findByName: function(name) {   
+    console.log(name); 
+    return axios.get("/api/facilities/name/" + name);
+  },
   create: function(req, res) {
     
   },
