@@ -2,7 +2,7 @@ import React from "react";
 
 
 export const Details = ({ children }) => (
-    <div>
+    <div className="container">
          {children}
     </div>
 );
