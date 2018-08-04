@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import BarChart from "react-svg-bar-chart"
-import Tooltip from "react-simple-tooltip"
+import BarChart from "react-svg-bar-chart";
+import Tooltip from "react-simple-tooltip";
 import { Details, DonutChart, Table, Row } from "../../components/Details";
 // import { BarChart } from 'react-native-chart-kit'
 import API from "../../utils/API";
@@ -65,8 +65,7 @@ class Detail extends Component {
         this.setState({ totalFacilities: data });
       })
       .catch(err => console.log(err));
-
-
+      
   }
 
   handlePointHover = (point, e) => {

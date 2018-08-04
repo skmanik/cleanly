@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import queryString from "query-string";
 import Search from "../../components/Search";
 import Card from "../../components/Card";
 import API from "../../utils/API";
@@ -14,6 +15,12 @@ class Results extends Component {
 		// API stuff
 		console.log("Results page!");
 
+		// if there is a query, then we call searchForBusiness with that query
+		const query = queryString.parse(this.props.location.search).q;
+
+		if (query) {
+			this.searchForBusiness(query);
+		}
 	};
 
 	searchForBusiness = query => {
