@@ -10,7 +10,7 @@ router
   .route("/:id")
   .get(facilitiesController.findById);
 
-  router
+router
   .route("/name/:name")
   .get(facilitiesController.findByName);
   

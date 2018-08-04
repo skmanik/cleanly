@@ -32,7 +32,9 @@ module.exports = {
     });
   },
   findByQuery: function (req, res) {
-    const url = 'https://data.sfgov.org/resource/sipz-fjte.json?$where=business_name like%20%27%25' + req.query.q + "%25%27";
+    // fixing capitalization problem
+    const query = req.query.q.toLowerCase();
+    const url = 'https://data.sfgov.org/resource/sipz-fjte.json?$where=lower(business_name) like%20%27%25' + query + "%25%27";
 
 
     request(url, { json: true }, (err, apiResponse, body) => {
