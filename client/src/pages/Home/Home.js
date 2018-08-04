@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Search from "../../components/Search";
+import Carousel from "../../components/Carousel";
 import API from "../../utils/API";
 
 const Home = () => (
@@ -13,6 +14,9 @@ const Home = () => (
 				<Search />
 			</div>
 		</div>
+	</section>
+	<section className="section main">
+		<Carousel />
 	</section>
   </div>
 );
