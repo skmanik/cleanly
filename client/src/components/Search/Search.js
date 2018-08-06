@@ -17,8 +17,26 @@ class Search extends Component {
 		console.log("I added an on click!");
 		// this.props.history.push("/results?q=Hello");
 
-		this.props.onSearch(this.state.input);
+		this.doSearch();
 	};
+
+	// on hitting enter, do search (alternate)
+	handleKeyPress = event => {
+		if (event.key === "Enter") {
+      		console.log("Enter was hit!");
+
+      		this.doSearch();
+    	}
+	}
+
+	// do search
+	doSearch = () => {
+		if (this.state.input === "" || this.state.input === null || this.state.input === "undefined") {
+			return;
+		}
+
+		this.props.onSearch(this.state.input);
+	}
 
 	render() {
 		return (
@@ -30,6 +48,7 @@ class Search extends Component {
 							type="text"
 							placeholder="Enter a facility name..."
 							onChange={this.onInput}
+							onKeyPress={this.handleKeyPress}
 						/>
 					</div>
 					<div className="control">
