@@ -33,13 +33,13 @@ module.exports = {
   },
   findByQuery: function (req, res) {
     // fixing capitalization problem
-    const query = req.query.q.toLowerCase();
-    const url = 'https://data.sfgov.org/resource/sipz-fjte.json?$where=lower(business_name) like%20%27%25' + query + "%25%27";
-
+    const query = req.query.q.toLowerCase().split("'").join("''");
+    const url = encodeURI("https://data.sfgov.org/resource/sipz-fjte.json?$where=lower(business_name) like '%" + query + "%'");
 
     request(url, { json: true }, (err, apiResponse, body) => {
       if (err) {
         res.json({ 'error': err });
+
       } else {
         const businessesById = mergeBusinessesByInspections(body);
         let businessesArr = [];

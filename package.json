@@ -31,6 +31,7 @@
     "if-env": "^1.0.4",
     "mongoose": "^5.0.17",
     "query-string": "^6.1.0",
+    "react-paginate": "^5.2.4",
     "react-simple-tooltip": "^2.3.2",
     "react-svg-bar-chart": "^1.0.0",
     "request": "^2.87.0"
