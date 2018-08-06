@@ -7,10 +7,14 @@ class Carousel extends Component {
 
 	scrollRight = () => {
 		console.log("Going somewhere!");
+
+		this.sideScroll(this.carousel, 'right', 15, 500, 50);
 	}
 
 	scrollLeft = () => {
 		console.log("Going somewhere!");
+
+		this.sideScroll(this.carousel, 'left', 15, 500, 50);
 	}
 
 	sideScroll = (element, direction, speed, distance, step) => {
@@ -23,6 +27,7 @@ class Carousel extends Component {
 				element.scrollLeft += step;
 			}
 			scrollAmount += step;
+
 			if (scrollAmount >= distance) {
 				window.clearInterval(slideTimer);
 			}
@@ -33,7 +38,7 @@ class Carousel extends Component {
 		return(
 			<div className="container">
 				<div className="cl-carouselwrap">
-					<div className="cl-carouselstrip">
+					<div className="cl-carouselstrip" ref={(carousel) => { this.carousel = carousel }}>
 						{/* temporary, will put these arrow svgs in their own section later, just testing rn */}
 						<div className="cl-arrowbutton" id="cl-arrowright" onClick={this.scrollRight}>
 							<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 306 306" xmlSpace="preserve">
