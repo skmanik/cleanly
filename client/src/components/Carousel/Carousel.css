@@ -26,6 +26,7 @@
 .cl-arrowbutton {
     height: 42px;
     width: 42px;
+    padding: 13px;
     border-radius: 50%;
     border: 1px solid #ddd;
     position: absolute;
@@ -54,7 +55,18 @@
 
 #cl-arrowright svg,
 #cl-arrowleft svg {
+    position: relative;
     background: transparent;
     display: block;
-    margin: 8px auto;
+    margin: 0px auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#cl-arrowright svg {
+    right: -2px;
+}
+
+#cl-arrowleft svg {
+    left: -2px;
 }
