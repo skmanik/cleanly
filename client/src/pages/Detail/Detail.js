@@ -4,9 +4,7 @@ import Tooltip from "react-simple-tooltip";
 import { Details, DonutChart, Table, Row } from "../../components/Details";
 // import { BarChart } from 'react-native-chart-kit'
 import API from "../../utils/API";
-
 import "./Detail.css";
-
 
 class Detail extends Component {
 
@@ -85,7 +83,26 @@ class Detail extends Component {
   render() {
     return (
       <div>
-        <Details>
+        {/* this is the banner */}
+        <section className="hero is-info is-transparent" id="cl-banner">
+           <div className="cl-bannerimg"></div>
+           <div className="cl-banneroverlay"></div>
+           <div className="hero-body">
+              <div className="container">
+                 <h1 className="title has-text-centered is-size-3 cl-bannertext">{this.state.name}</h1>
+              </div>
+           </div>
+        </section>
+
+        {/* this is the content */}
+      </div>
+    )
+  };
+}
+
+export default Detail;
+
+/* <Details>
           <h1>{this.state.name}</h1>
         </Details>
         <div>
@@ -98,11 +115,7 @@ class Detail extends Component {
             </Row>
           ))}
         </Table>
-        <div
-          style={{
-            position: "relative",
-          }}
-        >
+        <div style={{ position: "relative", }}>
           {this.state.tooltipTrigger ? (
             <Tooltip
               fixed
@@ -126,9 +139,4 @@ class Detail extends Component {
             gridVisible={false}
             axisOpacity={0.5} />
         </div>
-      </div>
-    )
-  };
-}
-
-export default Detail;
+*/
