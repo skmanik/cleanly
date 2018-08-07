@@ -12,6 +12,7 @@ class Detail extends Component {
 
   state = {
     name: "",
+    address: "",
     idFacility: 0,
     average: 0,
     violationDescription: [],
@@ -31,8 +32,12 @@ class Detail extends Component {
     this.setState({ idFacility: this.props.match.params.id });
     API.findById(this.props.match.params.id)
       .then(res => {
+
+        console.log(res.data.violationDescription);
+
         this.setState({
           name: res.data.name,
+          address: res.data.address,
           average: res.data.average,
           violationDescription: res.data.violationDescription,
         }, () => {
@@ -134,10 +139,12 @@ class Detail extends Component {
   render() {
     return (
       <div>
+
         <section className="hero is-primary">
           <div className="hero-body">
           </div>
         </section>
+        
         <section className="main section">
           <div className="container">
 
@@ -147,6 +154,7 @@ class Detail extends Component {
                 <Image src={this.state.photo} alt={this.state.photo} />
                 <Details>
                   <h1 className="title">{this.state.name}</h1>
+                  <h2 className="title">{this.state.address}</h2>
                 </Details>
               </div>
               <div className="column is-half">
@@ -164,7 +172,7 @@ class Detail extends Component {
                   {this.state.tooltipTrigger ? (
                     <Tooltip
                       fixed
-                      placement="center"
+                      placement="top"
                       radius={10}
                       arrow={10}
 
@@ -179,11 +187,17 @@ class Detail extends Component {
                       content={this.state.point.address + "  " + this.state.point.score + "%"}
                     />
                   ) : null}
-                  <h2 className="title">Other facilities</h2>
-                  <BarChart data={this.state.totalFacilities} onHover={this.handlePointHover}
-                    labelsVisible={false}
-                    gridVisible={false}
-                    axisOpacity={0.5} />
+
+                  {this.state.totalFacilities.length > 0 ?
+                    <div>
+                      <h2 className="title">Other facilities</h2>
+                      <BarChart data={this.state.totalFacilities} onHover={this.handlePointHover}
+                        labelsVisible={false}
+                        gridVisible={false}
+                        axisOpacity={0.5} />
+                    </div>
+                    : null}
+
                 </div>
               </div>
               <div className="column is-half">
