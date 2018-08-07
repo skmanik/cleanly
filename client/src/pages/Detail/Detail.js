@@ -3,6 +3,7 @@ import BarChart from "react-svg-bar-chart"
 import Tooltip from "react-simple-tooltip"
 import { Details, DonutChart, Table, Row, Image } from "../../components/Details";
 import { Comment, FormBtn, TextArea, Description } from "../../components/Comments";
+
 import API from "../../utils/API";
 
 import "./Detail.css";
