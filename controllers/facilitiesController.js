@@ -1,4 +1,8 @@
 const request = require('request');
+const db = require("../models");
+
+const imageCache = {
+};
 
 module.exports = {
   findAll: function (req, res) {
@@ -46,34 +50,105 @@ module.exports = {
           businessesArr.push(businessesById[business_id]);
         }
 
+        // fetchBusinessPhotos(businessArr, (results) => {
+        //   res.json(businessesArr);
+        // })
         res.json(businessesArr);
       }
     });
   },
   findByName: function (req, res) {
-
     const url = 'https://data.sfgov.org/resource/sipz-fjte.json?business_name=' + req.params.name;
 
     request(url, { json: true }, (err, apiResponse, body) => {
       if (err) {
         res.json({ 'error': err });
       } else {
-        const detailsByName = mergeDetailsByName(body);
-        console.log(detailsByName);
+        const detailsByName = mergeDetailsByName(body, req.params.id);
         res.json(detailsByName);
       }
     });
   },
-  create: function (req, res) {
+  findPhotoByName: function (req, res) {
 
+    const url = 'https://api.yelp.com/v3/businesses/search?term=' + req.params.name + '&location=' + 'San Francisco';
+
+    request.get(
+      {
+        url: url,
+        'auth': {
+          'bearer': 'o5TK22LavqG5H7xgHmlqBQJTli848SG1BwswfnJwHUddsy3eItvlmi2zbs-GB44tBi7KcCHHSah8kCkkE8n-1cdmczRnpzDPD9OAUwwVnTTrX1IbpCIpaVpWVozNWnYx'
+        }
+      },
+      (err, apiResponse, body) => {
+        if (err) {
+          apiResponse.json({ 'error': err });
+        } else {
+          res.json(apiResponse.body);
+        }
+      });
   },
-  update: function (req, res) {
-
+  saveComment: function (req, res) {
+    console.log("Comment", req.body);
+    db.Facility
+      .create(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
   },
-  remove: function (req, res) {
-
+  findCommentByFacility: function (req, res) {
+    console.log("Controller", req.params);
+    db.Facility
+      .find({ 'idFacility': req.params.idFacility })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
   }
 };
+
+// const fetchBusinessPhotos = (businesses, callback) => {
+//   let numberOfCallbacks = 0;
+
+//   for (let currentBusiness of businesses) {
+//     const url = 'https://api.yelp.com/v3/businesses/search?term=' + name + '&location=' + 'San Francisco';
+
+//     // CACHING CODE
+//     if (imageCache[url]) {
+//       currentBusiness.photoUrl = imageCache[url];
+//       numberOfCallbacks++;
+//       if (numberOfCallbacks >= businesses.length) {
+//         callback();
+//       }
+//       continue;
+//     }
+
+//     // Not cached, do request.get
+//     request.get(
+//       {
+//         url: url,
+//         'auth': {
+//           'bearer': 'o5TK22LavqG5H7xgHmlqBQJTli848SG1BwswfnJwHUddsy3eItvlmi2zbs-GB44tBi7KcCHHSah8kCkkE8n-1cdmczRnpzDPD9OAUwwVnTTrX1IbpCIpaVpWVozNWnYx'
+//         }
+//       },
+//       (err, apiResponse, body) => {
+
+//         // FIX ME ----------------------v
+//         currentBusiness.photoUrl = body.photo;
+//         imageCache[url] = currentBusiness.photoUrl;
+
+//         if (err) {
+//           apiResponse.json({ 'error': err });
+//         } else {
+//           //console.log(res);
+//           apiResponse.json(body);
+//         }
+
+//         numberOfCallbacks++;
+//         if (numberOfCallbacks >= businesses.length) {
+//           callback();
+//         }
+//       });
+//   }
+// }
+
 
 // functions used by findByQuery
 const mergeBusinessesByInspections = (businesses) => {
@@ -140,36 +215,39 @@ const mergeDetailsById = (businesses) => {
   return details;
 }
 
-const mergeDetailsByName = (businesses) => {
+const mergeDetailsByName = (businesses, id) => {
   const temporalFacility = [];
   const facility = [];
 
   for (let currentBusiness of businesses) {
-    name = currentBusiness.business_name;
 
-    let facilityAddress = temporalFacility.find(vendor => vendor['business_address'] === currentBusiness.business_address);
+    if (currentBusiness.business_id !== id) {
+      name = currentBusiness.business_name;
 
-    if (facilityAddress === undefined) {
+      let facilityAddress = temporalFacility.find(vendor => vendor['business_address'] === currentBusiness.business_address);
 
-      const violation_description = [];
-      violation_description.push(currentBusiness.violation_description);
+      if (facilityAddress === undefined) {
 
-      const inspection_score = [];
-      inspection_score.push(currentBusiness.inspection_score);
+        const violation_description = [];
+        violation_description.push(currentBusiness.violation_description);
 
-      temporalFacility.push({
-        name: currentBusiness.name,
-        business_address: currentBusiness.business_address,
-        business_city: currentBusiness.business_city,
-        business_postal_code: currentBusiness.business_postal_code,
-        business_state: currentBusiness.business_state,
-        violation_description: violation_description,
-        inspection_score: inspection_score
-      });
-    }
-    else {
-      facilityAddress.violation_description.push(currentBusiness.violation_description);
-      facilityAddress.inspection_score.push(currentBusiness.inspection_score);
+        const inspection_score = [];
+        inspection_score.push(currentBusiness.inspection_score);
+
+        temporalFacility.push({
+          name: currentBusiness.name,
+          business_address: currentBusiness.business_address,
+          business_city: currentBusiness.business_city,
+          business_postal_code: currentBusiness.business_postal_code,
+          business_state: currentBusiness.business_state,
+          violation_description: violation_description,
+          inspection_score: inspection_score
+        });
+      }
+      else {
+        facilityAddress.violation_description.push(currentBusiness.violation_description);
+        facilityAddress.inspection_score.push(currentBusiness.inspection_score);
+      }
     }
   }
 
@@ -187,9 +265,9 @@ const mergeDetailsByName = (businesses) => {
     for (let violationItem = 0; violationItem < temporalFacility[iterator].violation_description.length; violationItem++) {
 
       let description = temporalFacility[iterator].violation_description[violationItem];
-      
+
       if (description != null) {
-        
+
         const exist = violation.includes(description);
 
         if (exist == false) {
@@ -210,6 +288,5 @@ const mergeDetailsByName = (businesses) => {
       violation_description: violation
     })
   }
-
   return facility;
 }

@@ -7,7 +7,7 @@ export class DonutChart extends Component {
         this.state = {
             value: 0,
             valuelabel: 'Completed',
-            size: 116,
+            size: 450,
             strokewidth: 26
         }
     }
@@ -15,7 +15,7 @@ export class DonutChart extends Component {
     render() {
 
         const halfsize = (this.state.size * 0.5);
-        const radius = halfsize - (this.state.strokewidth * 0.5);
+        const radius = halfsize - (this.state.strokewidth * 5.5);
         const circumference = 2 * Math.PI * radius;
         const strokeval = ((this.props.value * circumference) / 100);
         const dashval = (strokeval + ' ' + circumference);
