@@ -89,66 +89,18 @@ module.exports = {
       });
   },
   saveComment: function (req, res) {
-    console.log("Comment", req.body);
     db.Facility
       .create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findCommentByFacility: function (req, res) {
-    console.log("Controller", req.params);
     db.Facility
       .find({ 'idFacility': req.params.idFacility })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }
 };
-
-// const fetchBusinessPhotos = (businesses, callback) => {
-//   let numberOfCallbacks = 0;
-
-//   for (let currentBusiness of businesses) {
-//     const url = 'https://api.yelp.com/v3/businesses/search?term=' + name + '&location=' + 'San Francisco';
-
-//     // CACHING CODE
-//     if (imageCache[url]) {
-//       currentBusiness.photoUrl = imageCache[url];
-//       numberOfCallbacks++;
-//       if (numberOfCallbacks >= businesses.length) {
-//         callback();
-//       }
-//       continue;
-//     }
-
-//     // Not cached, do request.get
-//     request.get(
-//       {
-//         url: url,
-//         'auth': {
-//           'bearer': 'o5TK22LavqG5H7xgHmlqBQJTli848SG1BwswfnJwHUddsy3eItvlmi2zbs-GB44tBi7KcCHHSah8kCkkE8n-1cdmczRnpzDPD9OAUwwVnTTrX1IbpCIpaVpWVozNWnYx'
-//         }
-//       },
-//       (err, apiResponse, body) => {
-
-//         // FIX ME ----------------------v
-//         currentBusiness.photoUrl = body.photo;
-//         imageCache[url] = currentBusiness.photoUrl;
-
-//         if (err) {
-//           apiResponse.json({ 'error': err });
-//         } else {
-//           //console.log(res);
-//           apiResponse.json(body);
-//         }
-
-//         numberOfCallbacks++;
-//         if (numberOfCallbacks >= businesses.length) {
-//           callback();
-//         }
-//       });
-//   }
-// }
-
 
 // functions used by findByQuery
 const mergeBusinessesByInspections = (businesses) => {
@@ -188,20 +140,29 @@ const mergeDetailsById = (businesses) => {
   let totalItems = 0;
   let name;
   let id = 0;
+  let address;
 
   for (let currentBusiness of businesses) {
+
     name = currentBusiness.business_name;
+    address = currentBusiness.business_address + ", " + currentBusiness.business_city + ", " + currentBusiness.business_postal_code;
 
     if (typeof currentBusiness.inspection_score != 'undefined') {
       average = average + parseInt(currentBusiness.inspection_score);
       totalItems++;
     }
     if (currentBusiness.violation_description != null) {
-      id++;
-      violationDescription.push({
-        violation_description: currentBusiness.violation_description,
-        inspection_id: id
-      });
+
+      let violation = violationDescription.find(vio => vio['violation_description'] === currentBusiness.violation_description);
+
+      if (violation === undefined) {
+        id++;
+        violationDescription.push({
+          violation_description: currentBusiness.violation_description,
+          risk_category: currentBusiness.risk_category,
+          inspection_id: id
+        });
+      }
     }
   }
 
@@ -209,6 +170,7 @@ const mergeDetailsById = (businesses) => {
 
   const details = {
     name: name,
+    address: address,
     average: average,
     violationDescription: violationDescription
   }
