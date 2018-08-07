@@ -5,24 +5,23 @@ export default {
   findAll: function(req, res) {
     return axios.get("/api/facilities");
   },
-  findById: function(id) {
-    console.log("API", id);    
+  findById: function(id) {   
     return axios.get("/api/facilities/" + id);
   },
   findByQuery: function(query) {    
     return axios.get("/api/facilities?q=" + encodeURI(query));
   },
-  findByName: function(name) {   
-    console.log(name); 
-    return axios.get("/api/facilities/name/" + name);
+  findByName: function(name, id) {   
+    return axios.get("/api/facilities/name/" + name + "/id/" + id);
   },
-  create: function(req, res) {
-    
+  findPhotoByName: function(name) {   
+    return axios.get("/api/facilities/photo/" + name);
   },
-  update: function(req, res) {
-   
+  saveComment: function(comment) {
+    return axios.post("/api/facilities", comment);
   },
-  remove: function(req, res) {
+  findCommentByIdFacility: function(idFacility) {
+    return axios.get("/api/facilities/comment/" + idFacility);
    
   }
 };
