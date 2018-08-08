@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import CarItem from "./CarItem.js";
 import "./Carousel.css";
 
-class Carousel extends Component {
-	state = {};
+export class Carousel extends Component {
+	constructor(props) {
+        super(props)
+        this.state = {
+        }
+    }
 
 	scrollRight = () => {
 		console.log("Going somewhere!");
@@ -62,16 +66,7 @@ class Carousel extends Component {
 		          		</div>
 		              	{/* temporary, will put these arrow svgs in their own section later, just testing rn */}
 
-		              	<CarItem />
-		              	<CarItem />
-		              	<CarItem />
-		              	<CarItem />
-		              	<CarItem />
-		              	<CarItem />
-		              	<CarItem />
-		              	<CarItem />
-		              	<CarItem />
-		              	<CarItem />
+		              {this.props.children}
 					</div>
 				</div>
 			</div>
@@ -79,4 +74,4 @@ class Carousel extends Component {
 	}
 }
 
-export default Carousel;
+//export default Carousel;

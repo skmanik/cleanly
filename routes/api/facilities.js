@@ -11,7 +11,7 @@ router
   .route("/:id")
   .get(facilitiesController.findById);
 
-  router
+router
   .route("/comment/:idFacility")
   .get(facilitiesController.findCommentByFacility);
 
@@ -21,6 +21,10 @@ router
 
 router
   .route("/photo/:name")
-  .get(facilitiesController.findPhotoByName)
+  .get(facilitiesController.findPhotoByName);
+
+router
+  .route("/findTop/high")
+  .get(facilitiesController.findTop);
 
 module.exports = router;

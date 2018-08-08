@@ -21,7 +21,10 @@ export default {
     return axios.post("/api/facilities", comment);
   },
   findCommentByIdFacility: function(idFacility) {
-    return axios.get("/api/facilities/comment/" + idFacility);
-   
+    return axios.get("/api/facilities/comment/" + idFacility);   
+  },
+  findTop: function() {
+    console.log("FindTOP");
+    return axios.get("/api/facilities/findTop/high");   
   }
 };
