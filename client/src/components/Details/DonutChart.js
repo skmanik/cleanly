@@ -13,7 +13,6 @@ export class DonutChart extends Component {
     }
 
     render() {
-
         const halfsize = (this.state.size * 0.5);
         const radius = halfsize - (this.state.strokewidth * 0.5);
         const circumference = 2 * Math.PI * radius;

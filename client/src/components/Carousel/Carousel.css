@@ -1,0 +1,72 @@
+.cl-carouselstrip {
+	white-space: nowrap;
+	overflow-x: auto;
+	padding: 0.5rem 0.5rem;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-overflow-style: none; /* IE */
+	overflow: -moz-scrollbars-none; /* Firefox */
+}
+
+.cl-carouselstrip::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.cl-carouselcard {
+	min-height: 240px;
+	margin: 0 1.25rem 0 0;
+}
+
+/* old firefox fix */
+@-moz-document url-prefix() { 
+	.cl-carousel-strip { overflow: hidden; } 
+}
+
+.cl-arrowbutton {
+    height: 42px;
+    width: 42px;
+    padding: 13px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    position: absolute;
+    z-index: 9999;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(153,153,153,.4);
+}
+
+.cl-carouselwrap {
+    position: relative;
+    max-width: 100%;
+}
+
+#cl-arrowright {
+    top: 50%;
+    margin-top: -25px;
+    right: -21px;
+}
+
+#cl-arrowleft {
+    top: 50%;
+    margin-top: -25px;
+    left: -21px;
+}
+
+#cl-arrowright svg,
+#cl-arrowleft svg {
+    position: relative;
+    background: transparent;
+    display: block;
+    margin: 0px auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#cl-arrowright svg {
+    right: -2px;
+}
+
+#cl-arrowleft svg {
+    left: -2px;
+}

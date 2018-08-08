@@ -8,8 +8,6 @@ class Card extends Component {
 		rating: 0
 	};
 
-	// functions
-	// go here
 	componentDidMount() {
 		console.log(this.props.business);
 

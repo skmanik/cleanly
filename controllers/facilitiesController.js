@@ -1,4 +1,6 @@
+
 const request = require('request');
+const db = require("../models");
 
 module.exports = {
   findAll: function (req, res) {
@@ -48,32 +50,79 @@ module.exports = {
           businessesArr.push(businessesById[business_id]);
         }
 
+        // fetchBusinessPhotos(businessArr, (results) => {
+        //   res.json(businessesArr);
+        // })
         res.json(businessesArr);
       }
     });
   },
   findByName: function (req, res) {
-
     const url = 'https://data.sfgov.org/resource/sipz-fjte.json?business_name=' + req.params.name;
 
     request(url, { json: true }, (err, apiResponse, body) => {
       if (err) {
         res.json({ 'error': err });
       } else {
-        const detailsByName = mergeDetailsByName(body);
-        console.log(detailsByName);
+        const detailsByName = mergeDetailsByName(body, req.params.id);
         res.json(detailsByName);
       }
     });
   },
-  create: function (req, res) {
+  findTop: function (req, res) {
 
+    const url = 'https://data.sfgov.org/resource/sipz-fjte.json?$where=inspection_score=100';
+
+    request(url, { json: true }, (err, apiResponse, body) => {
+      if (err) {
+        res.json({ 'error': err });
+      } else {
+        const bestPlaces = mergeDetailsByName(body, 0).slice(0, 10);
+
+        let count = 0;
+        for (const place of bestPlaces) {
+          getPhoto(place.name, imageUrl => {
+            count++;
+            place.photo = imageUrl;
+            if (count >= bestPlaces.length) {
+              res.json(bestPlaces);
+            }
+          })
+        }
+
+      }
+    });
   },
-  update: function (req, res) {
+  findPhotoByName: function (req, res) {
 
+    const url = 'https://api.yelp.com/v3/businesses/search?term=' + req.params.name + '&location=' + 'San Francisco';
+
+    request.get(
+      {
+        url: url,
+        'auth': {
+          'bearer': 'o5TK22LavqG5H7xgHmlqBQJTli848SG1BwswfnJwHUddsy3eItvlmi2zbs-GB44tBi7KcCHHSah8kCkkE8n-1cdmczRnpzDPD9OAUwwVnTTrX1IbpCIpaVpWVozNWnYx'
+        }
+      },
+      (err, apiResponse, body) => {
+        if (err) {
+          apiResponse.json({ 'error': err });
+        } else {
+          res.json(apiResponse.body);
+        }
+      });
   },
-  remove: function (req, res) {
-
+  saveComment: function (req, res) {
+    db.Facility
+      .create(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  findCommentByFacility: function (req, res) {
+    db.Facility
+      .find({ 'idFacility': req.params.idFacility })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
   }
 };
 
@@ -100,7 +149,6 @@ const mergeBusinessesByInspections = (businesses) => {
           [currentBusiness.inspection_id]: currentBusiness.inspection_score
         }
       }
-
       // storing in businessesById obj
       businessesById[currentBusiness.business_id] = businessObj;
     }
@@ -109,26 +157,72 @@ const mergeBusinessesByInspections = (businesses) => {
   return businessesById;
 }
 
+
+const photoCache = {};
+const getPhoto = (businessName, callback) => {
+  const url = 'https://api.yelp.com/v3/businesses/search?term=' + businessName + '&location=' + 'San Francisco';
+  if (photoCache[url]) {
+    // Already exists in the photo cache
+    callback(photoCache[url]);
+    console.log('cache hit', photoCache)
+    return;
+  }
+
+  request.get(
+    {
+      url: url,
+      'auth': {
+        'bearer': 'o5TK22LavqG5H7xgHmlqBQJTli848SG1BwswfnJwHUddsy3eItvlmi2zbs-GB44tBi7KcCHHSah8kCkkE8n-1cdmczRnpzDPD9OAUwwVnTTrX1IbpCIpaVpWVozNWnYx'
+      }
+    },
+    (err, apiResponse, body) => {
+      if (err) {
+        console.log("ERROR OCCURED :( :( :( ", err)
+        callback({error: err})
+      } else {
+        //callback(apiResponse.body);
+        const businesses = JSON.parse(apiResponse.body).businesses;
+
+        let img = null;
+        if (businesses && businesses.length > 0) {
+          img = businesses[0].image_url;
+        }
+        photoCache[url] = img;
+        console.log('getting image back', img) 
+        callback(img);
+      }
+    });
+}
+
 const mergeDetailsById = (businesses) => {
   const violationDescription = [];
   let average = 0;
   let totalItems = 0;
   let name;
   let id = 0;
+  let address;
 
   for (let currentBusiness of businesses) {
+
     name = currentBusiness.business_name;
+    address = currentBusiness.business_address + ", " + currentBusiness.business_city + ", " + currentBusiness.business_postal_code;
 
     if (typeof currentBusiness.inspection_score != 'undefined') {
       average = average + parseInt(currentBusiness.inspection_score);
       totalItems++;
     }
     if (currentBusiness.violation_description != null) {
-      id++;
-      violationDescription.push({
-        violation_description: currentBusiness.violation_description,
-        inspection_id: id
-      });
+
+      let violation = violationDescription.find(vio => vio['violation_description'] === currentBusiness.violation_description);
+
+      if (violation === undefined) {
+        id++;
+        violationDescription.push({
+          violation_description: currentBusiness.violation_description,
+          risk_category: currentBusiness.risk_category,
+          inspection_id: id
+        });
+      }
     }
   }
 
@@ -136,42 +230,46 @@ const mergeDetailsById = (businesses) => {
 
   const details = {
     name: name,
+    address: address,
     average: average,
     violationDescription: violationDescription
   }
   return details;
 }
 
-const mergeDetailsByName = (businesses) => {
+const mergeDetailsByName = (businesses, id) => {
   const temporalFacility = [];
   const facility = [];
 
   for (let currentBusiness of businesses) {
-    name = currentBusiness.business_name;
 
-    let facilityAddress = temporalFacility.find(vendor => vendor['business_address'] === currentBusiness.business_address);
+    if (currentBusiness.business_id !== id) {
+      name = currentBusiness.business_name;
 
-    if (facilityAddress === undefined) {
+      let facilityAddress = temporalFacility.find(vendor => vendor['business_address'] === currentBusiness.business_address);
 
-      const violation_description = [];
-      violation_description.push(currentBusiness.violation_description);
+      if (facilityAddress === undefined) {
 
-      const inspection_score = [];
-      inspection_score.push(currentBusiness.inspection_score);
+        const violation_description = [];
+        violation_description.push(currentBusiness.violation_description);
 
-      temporalFacility.push({
-        name: currentBusiness.name,
-        business_address: currentBusiness.business_address,
-        business_city: currentBusiness.business_city,
-        business_postal_code: currentBusiness.business_postal_code,
-        business_state: currentBusiness.business_state,
-        violation_description: violation_description,
-        inspection_score: inspection_score
-      });
-    }
-    else {
-      facilityAddress.violation_description.push(currentBusiness.violation_description);
-      facilityAddress.inspection_score.push(currentBusiness.inspection_score);
+        const inspection_score = [];
+        inspection_score.push(currentBusiness.inspection_score);
+
+        temporalFacility.push({
+          name: currentBusiness.business_name,
+          business_address: currentBusiness.business_address,
+          business_city: currentBusiness.business_city,
+          business_postal_code: currentBusiness.business_postal_code,
+          business_state: currentBusiness.business_state,
+          violation_description: violation_description,
+          inspection_score: inspection_score
+        });
+      }
+      else {
+        facilityAddress.violation_description.push(currentBusiness.violation_description);
+        facilityAddress.inspection_score.push(currentBusiness.inspection_score);
+      }
     }
   }
 
@@ -189,9 +287,9 @@ const mergeDetailsByName = (businesses) => {
     for (let violationItem = 0; violationItem < temporalFacility[iterator].violation_description.length; violationItem++) {
 
       let description = temporalFacility[iterator].violation_description[violationItem];
-      
+
       if (description != null) {
-        
+
         const exist = violation.includes(description);
 
         if (exist == false) {
@@ -203,6 +301,7 @@ const mergeDetailsByName = (businesses) => {
     average = (average / countItem).toFixed(2);
 
     facility.push({
+      id: iterator,
       name: temporalFacility[iterator].name,
       business_address: temporalFacility[iterator].business_address,
       business_city: temporalFacility[iterator].business_city,
@@ -212,6 +311,5 @@ const mergeDetailsByName = (businesses) => {
       violation_description: violation
     })
   }
-
   return facility;
 }
