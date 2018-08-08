@@ -13,6 +13,14 @@ class Home extends Component {
 		this.findTop();
 	};
 
+	searchForBusiness = query => {
+        const searchPath = "/results?q=" + query;
+        const encodedPath = encodeURI(searchPath);
+
+        // this just lets the user know in URL bar what's being searched
+        this.props.history.push(encodedPath);
+    }
+
 	findTop() {
 		API.findTop()
 			.then(res => {
@@ -25,7 +33,6 @@ class Home extends Component {
 			})
 			.catch(err => console.log(err));
 	}	
-	
 
 	render() {
 		return (
@@ -35,7 +42,7 @@ class Home extends Component {
 						<div className="container">
 							<h1 className="title">Cleanly</h1>
 							{/* A search bar that sends user to results page */}
-							<Search />
+							<Search onSearch={this.searchForBusiness} />
 						</div>
 					</div>
 				</section>

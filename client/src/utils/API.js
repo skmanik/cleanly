@@ -8,7 +8,7 @@ export default {
   findById: function(id) {   
     return axios.get("/api/facilities/" + id);
   },
-  findByQuery: function(query) {    
+  findByQuery: function(query) {  
     return axios.get("/api/facilities?q=" + encodeURI(query));
   },
   findByName: function(name, id) {   
