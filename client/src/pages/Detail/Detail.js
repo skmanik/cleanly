@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import BarChart from "react-svg-bar-chart";
 import Tooltip from "react-simple-tooltip";
 import { Details, DonutChart, Table, Row } from "../../components/Details";
-// import { BarChart } from 'react-native-chart-kit'
 import API from "../../utils/API";
 import "./Detail.css";
 
@@ -95,48 +94,76 @@ class Detail extends Component {
         </section>
 
         {/* this is the content */}
+        <section className="section main">
+          <div className="container">
+              <div className="cl-detailsholder">
+                 <div className="columns">
+                    <div className="column is-two-thirds">
+                       <div className="cl-facilitybanner cl-box-shadow">
+                          <div className="cl-facilitybannerimg"></div>
+                       </div>
+                    </div>
+                    <div className="column">
+                       <div className="cl-facilityrating cl-boxshadow">
+                          <h1 className="title has-text-centered is-size-4">Cleanly Score</h1>
+                          <DonutChart value={this.state.average} />
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <div class="container">
+              <div class="cl-risksholder">
+                 <div class="columns">
+                    <div class="column is-two-fifths">
+                       <div class="cl-barchart">
+                          <h1 class="title is-size-4">Other scores from this franchise</h1>
+                          {this.state.tooltipTrigger ? (
+                            <Tooltip
+                              fixed
+                              placement="top"
+                              radius={10}
+                              arrow={10}
+
+                              style={{
+                                position: "fixed",
+                                top: this.state.tooltipTrigger.top + "px",
+                                left:
+                                  this.state.tooltipTrigger.left +
+                                  (this.state.tooltipTrigger.right - this.state.tooltipTrigger.left) / 2 +
+                                  "px",
+                              }}
+                              content={this.state.point.address + "  " + this.state.point.score+"%"}
+                            />
+                          ) : null}
+                          <BarChart 
+                            data={this.state.totalFacilities} 
+                            onHover={this.handlePointHover}
+                            labelsVisible={false}
+                            gridVisible={false}
+                            axisOpacity={0.5}
+                            viewBoxHeight={550} />
+                       </div>
+                    </div>
+                    <div class="column">
+                       <div class="cl-riskslist">
+                          <h1 class="title is-size-4">List of past health violations</h1>
+                          <ul class="cl-ulrl">
+                            {this.state.violationDescription.map(violation => (
+                              <li key={violation.inspection_id}>
+                                {violation.violation_description}
+                              </li>
+                            ))}
+                          </ul>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </section>
       </div>
     )
   };
 }
 
 export default Detail;
-
-/* <Details>
-          <h1>{this.state.name}</h1>
-        </Details>
-        <div>
-          <DonutChart value={this.state.average} />
-        </div>
-        <Table>
-          {this.state.violationDescription.map(violation => (
-            <Row key={violation.inspection_id}>
-              {violation.violation_description}
-            </Row>
-          ))}
-        </Table>
-        <div style={{ position: "relative", }}>
-          {this.state.tooltipTrigger ? (
-            <Tooltip
-              fixed
-              placement="top"
-              radius={10}
-              arrow={10}
-
-              style={{
-                position: "fixed",
-                top: this.state.tooltipTrigger.top + "px",
-                left:
-                  this.state.tooltipTrigger.left +
-                  (this.state.tooltipTrigger.right - this.state.tooltipTrigger.left) / 2 +
-                  "px",
-              }}
-              content={this.state.point.address + "  " + this.state.point.score+"%"}
-            />
-          ) : null}
-          <BarChart data={this.state.totalFacilities} onHover={this.handlePointHover}
-            labelsVisible={false}
-            gridVisible={false}
-            axisOpacity={0.5} />
-        </div>
-*/

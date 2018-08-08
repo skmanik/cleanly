@@ -14,6 +14,11 @@
     position: relative;
 }
 
+.cl-bannertext {
+    font-size: 2.3rem !important;
+    margin-bottom: 1.5rem;
+}
+
 .cl-bannerimg {
     position: absolute;
     top: 0;
