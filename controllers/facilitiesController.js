@@ -2,9 +2,6 @@
 const request = require('request');
 const db = require("../models");
 
-const imageCache = {
-};
-
 module.exports = {
   findAll: function (req, res) {
     // check if query is included, if so run
@@ -70,6 +67,30 @@ module.exports = {
       }
     });
   },
+  findTop: function (req, res) {
+
+    const url = 'https://data.sfgov.org/resource/sipz-fjte.json?$where=inspection_score=100';
+
+    request(url, { json: true }, (err, apiResponse, body) => {
+      if (err) {
+        res.json({ 'error': err });
+      } else {
+        const bestPlaces = mergeDetailsByName(body, 0).slice(0, 10);
+
+        let count = 0;
+        for (const place of bestPlaces) {
+          getPhoto(place.name, imageUrl => {
+            count++;
+            place.photo = imageUrl;
+            if (count >= bestPlaces.length) {
+              res.json(bestPlaces);
+            }
+          })
+        }
+
+      }
+    });
+  },
   findPhotoByName: function (req, res) {
 
     const url = 'https://api.yelp.com/v3/businesses/search?term=' + req.params.name + '&location=' + 'San Francisco';
@@ -126,13 +147,49 @@ const mergeBusinessesByInspections = (businesses) => {
           [currentBusiness.inspection_id]: currentBusiness.inspection_score
         }
       }
-
       // storing in businessesById obj
       businessesById[currentBusiness.business_id] = businessObj;
     }
   }
 
   return businessesById;
+}
+
+
+const photoCache = {};
+const getPhoto = (businessName, callback) => {
+  const url = 'https://api.yelp.com/v3/businesses/search?term=' + businessName + '&location=' + 'San Francisco';
+  if (photoCache[url]) {
+    // Already exists in the photo cache
+    callback(photoCache[url]);
+    console.log('cache hit', photoCache)
+    return;
+  }
+
+  request.get(
+    {
+      url: url,
+      'auth': {
+        'bearer': 'o5TK22LavqG5H7xgHmlqBQJTli848SG1BwswfnJwHUddsy3eItvlmi2zbs-GB44tBi7KcCHHSah8kCkkE8n-1cdmczRnpzDPD9OAUwwVnTTrX1IbpCIpaVpWVozNWnYx'
+      }
+    },
+    (err, apiResponse, body) => {
+      if (err) {
+        console.log("ERROR OCCURED :( :( :( ", err)
+        callback({error: err})
+      } else {
+        //callback(apiResponse.body);
+        const businesses = JSON.parse(apiResponse.body).businesses;
+
+        let img = null;
+        if (businesses && businesses.length > 0) {
+          img = businesses[0].image_url;
+        }
+        photoCache[url] = img;
+        console.log('getting image back', img) 
+        callback(img);
+      }
+    });
 }
 
 const mergeDetailsById = (businesses) => {
@@ -198,7 +255,7 @@ const mergeDetailsByName = (businesses, id) => {
         inspection_score.push(currentBusiness.inspection_score);
 
         temporalFacility.push({
-          name: currentBusiness.name,
+          name: currentBusiness.business_name,
           business_address: currentBusiness.business_address,
           business_city: currentBusiness.business_city,
           business_postal_code: currentBusiness.business_postal_code,
@@ -242,6 +299,7 @@ const mergeDetailsByName = (businesses, id) => {
     average = (average / countItem).toFixed(2);
 
     facility.push({
+      id: iterator,
       name: temporalFacility[iterator].name,
       business_address: temporalFacility[iterator].business_address,
       business_city: temporalFacility[iterator].business_city,
