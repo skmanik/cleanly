@@ -71,6 +71,7 @@ class Detail extends Component {
         tooltipTrigger: e.target.getBoundingClientRect(),
         point: point,
       })
+      console.log(e.target.getBoundingClientRect());
     } else {
       this.setState({
         tooltipTrigger: null,
@@ -112,43 +113,45 @@ class Detail extends Component {
                  </div>
               </div>
            </div>
-           <div class="container">
-              <div class="cl-risksholder">
-                 <div class="columns">
-                    <div class="column is-two-fifths">
-                       <div class="cl-barchart">
-                          <h1 class="title is-size-4">Other scores from this franchise</h1>
-                          {this.state.tooltipTrigger ? (
-                            <Tooltip
-                              fixed
-                              placement="top"
-                              radius={10}
-                              arrow={10}
+           <div className="container">
+              <div className="cl-risksholder">
+                 <div className="columns">
+                    <div className="column is-two-fifths">
+                       <div className="cl-barchart">
+                          <h1 className="title is-size-4">Other scores from this franchise</h1>
+                          <div style={{ position: "relative", }}>
+                            {this.state.tooltipTrigger ? (
+                              <Tooltip
+                                placement="top"
+                                radius={10}
+                                arrow={10}
 
-                              style={{
-                                position: "fixed",
-                                top: this.state.tooltipTrigger.top + "px",
-                                left:
+                                style={{
+                                  position: "absolute",
+                                  top: this.state.tooltipTrigger.top - 280 + "px",
+                                  left: 
                                   this.state.tooltipTrigger.left +
                                   (this.state.tooltipTrigger.right - this.state.tooltipTrigger.left) / 2 +
+                                  -90 + 
                                   "px",
-                              }}
-                              content={this.state.point.address + "  " + this.state.point.score+"%"}
-                            />
-                          ) : null}
-                          <BarChart 
-                            data={this.state.totalFacilities} 
-                            onHover={this.handlePointHover}
-                            labelsVisible={false}
-                            gridVisible={false}
-                            axisOpacity={0.5}
-                            viewBoxHeight={550} />
+                                }}
+                                content={this.state.point.address + "  " + this.state.point.score+"%"}
+                              />
+                            ) : null}
+                            <BarChart 
+                              data={this.state.totalFacilities} 
+                              onHover={this.handlePointHover}
+                              labelsVisible={false}
+                              gridVisible={false}
+                              axisOpacity={0.5}
+                              viewBoxHeight={550} />
+                          </div>
                        </div>
                     </div>
-                    <div class="column">
-                       <div class="cl-riskslist">
-                          <h1 class="title is-size-4">List of past health violations</h1>
-                          <ul class="cl-ulrl">
+                    <div className="column">
+                       <div className="cl-riskslist">
+                          <h1 className="title is-size-4">List of past health violations</h1>
+                          <ul className="cl-ulrl">
                             {this.state.violationDescription.map(violation => (
                               <li key={violation.inspection_id}>
                                 {violation.violation_description}
