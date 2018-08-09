@@ -70,7 +70,6 @@ module.exports = {
     });
   },
   findTop: function (req, res) {
-
     const url = 'https://data.sfgov.org/resource/sipz-fjte.json?$where=inspection_score=100';
 
     request(url, { json: true }, (err, apiResponse, body) => {
@@ -94,7 +93,6 @@ module.exports = {
     });
   },
   findPhotoByName: function (req, res) {
-
     const url = 'https://api.yelp.com/v3/businesses/search?term=' + req.params.name + '&location=' + 'San Francisco';
 
     request.get(
@@ -258,6 +256,7 @@ const mergeDetailsByName = (businesses, id) => {
 
         temporalFacility.push({
           name: currentBusiness.business_name,
+          business_id: currentBusiness.business_id,
           business_address: currentBusiness.business_address,
           business_city: currentBusiness.business_city,
           business_postal_code: currentBusiness.business_postal_code,
@@ -303,6 +302,7 @@ const mergeDetailsByName = (businesses, id) => {
     facility.push({
       id: iterator,
       name: temporalFacility[iterator].name,
+      business_id: temporalFacility[iterator].business_id,
       business_address: temporalFacility[iterator].business_address,
       business_city: temporalFacility[iterator].business_city,
       business_postal_code: temporalFacility[iterator].business_postal_code,

@@ -51,13 +51,20 @@ class Home extends Component {
 					</div>
 		      	</section>
 		      	<section className="section main">
+		      		<div class="container">
+		      			<h1 className="title is-size-4 cl-hometitle">High scoring businesses on Cleanly</h1>
+	      			</div>
 					<Carousel>
 						{this.state.facilities.map(facility => (
-							<CarItem key={facility.id}>
-								<p className="title is-4">{facility.name}</p>
-								<p className="subtitle is-6">{facility.business_address}, {facility.business_city}, {facility.business_state}</p>
-								 <img src={facility.photo} alt={facility.photo} /> 
-							</CarItem>
+							<a href={"results/" + facility.business_id}>
+								<CarItem key={facility.id}>
+									<div className="cl-carbgimg">
+										<div className="cl-realcarbgimg" style={{ background: "url(" + facility.photo + ") 100% 100% / cover" }}></div>
+									</div>
+									<p className="title is-5 cl-cartitle">{facility.name}</p>
+									<p className="subtitle is-6 cl-carsubtitle"><i class="fas fa-map-marker-alt"></i> <strong>{facility.business_address}</strong>, {facility.business_city}, {facility.business_state}</p>
+								</CarItem>
+							</a>
 						))}
 					</Carousel>
 				</section>
@@ -67,3 +74,8 @@ class Home extends Component {
 }
 
 export default Home;
+
+/* 
+<p className="title is-4">{facility.name}</p>
+								<p className="subtitle is-6">{facility.business_address}, {facility.business_city}, {facility.business_state}</p>
+								 <img src={facility.photo} alt={facility.photo} /> */

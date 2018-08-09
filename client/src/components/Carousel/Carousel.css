@@ -13,11 +13,6 @@
     display: none;  /* Safari and Chrome */
 }
 
-.cl-carouselcard {
-	min-height: 240px;
-	margin: 0 1.25rem 0 0;
-}
-
 /* old firefox fix */
 @-moz-document url-prefix() { 
 	.cl-carousel-strip { overflow: hidden; } 
@@ -39,6 +34,7 @@
 .cl-carouselwrap {
     position: relative;
     max-width: 100%;
+    height: 296px;
 }
 
 #cl-arrowright {
@@ -69,4 +65,68 @@
 
 #cl-arrowleft svg {
     left: -2px;
+}
+
+/* actual carousel */
+
+.cl-carouselstrip > a {
+    display: block;
+}
+
+.cl-carouselcard {
+    width: 235px;
+    height: 280px;
+    margin: 0 1.25rem 0 0;
+    border-radius: 4px;
+    transition: ease-in-out 0.1s;
+}
+
+.cl-carcardcontent {
+    width: 235px;
+    height: 280px;
+    padding: 1.5rem;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.cl-carbgimg {
+    height: 150px;
+    margin: -25px -25px 1.5rem -25px;
+    background: url(https://images.unsplash.com/photo-1517638851339-a711cfcf3279?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6b7d3fd7313e179636c1189245a70534&auto=format&fit=crop&w=2550&q=80);
+    background-size: cover;
+}
+
+.cl-realcarbgimg {
+    width: 100%;
+    height: 100%;
+}
+
+.cl-cartitle {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.cl-carsubtitle {
+    margin-top: -0.8rem !important;
+    white-space: normal;
+    font-size: 85% !important;
+    color: #6e6b7d !important;
+}
+
+.cl-carsubtitle strong {
+    color: #6e6b7d !important;
+}
+
+.cl-carsubtitle > svg {
+    position: relative;
+    top: -2px;
+    margin-right: 2px;
+    color: #01cfcd;
+}
+
+/* carousel animation */
+.cl-carouselstrip a:hover .cl-carouselcard {
+    -webkit-transform: translate(0, -5px);
+    -ms-transform: translate(0, -5px);
+    transform: translate(0, -5px);
 }
