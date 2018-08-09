@@ -111,9 +111,14 @@ module.exports = {
       });
   },
   saveComment: function (req, res) {
+    console.log("THIS IS DB!!", db.Facility);
+
     db.Facility
       .create(req.body)
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        console.log("THIS IS THE MODEL!!", dbModel);
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
   },
   findCommentByFacility: function (req, res) {

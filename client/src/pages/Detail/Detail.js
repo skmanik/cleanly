@@ -218,22 +218,24 @@ class Detail extends Component {
               </div>
            </div>
            <div className="container">
-                <h2 className="title">Comments</h2>
+                <div className="extrapadding">
+                    <h2 className="title is-size-4">Leave a comment!</h2>
 
-                {this.state.totalComments.map(description => (
-                  <Comment key={description._id}>
-                    <Description key={description._id}>
-                      {description.comment}
-                    </Description>
-                  </Comment>
-                ))}
+                    {this.state.totalComments.map(description => (
+                      <Comment key={description._id}>
+                        <Description key={description._id}>
+                          {description.comment}
+                        </Description>
+                      </Comment>
+                    ))}
 
-                <article className="media">
-                  <div className="media-content">
-                    <TextArea className="textarea" placeholder="Add a comment..." value={this.state.comment} onChange={this.handleInputChange} />
-                    <FormBtn onClick={this.handleFormSubmit} />
-                  </div>
-                </article>
+                    <article className="media">
+                      <div className="media-content">
+                        <TextArea className="textarea" placeholder="Add a comment..." value={this.state.comment} onChange={this.handleInputChange} />
+                        <FormBtn onClick={this.handleFormSubmit} />
+                      </div>
+                    </article>
+                </div>
            </div>
         </section>
       </div>
