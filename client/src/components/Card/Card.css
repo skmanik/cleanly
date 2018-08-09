@@ -1,0 +1,16 @@
+.result-card .donutchart {
+	margin-top: 0px;
+	margin-right: 5px;
+}
+
+.result-card .donutchart-text-val{
+  font-size:18px;
+}
+  
+.result-card .donutchart-text-percent{
+  font-size:10px;
+}
+  
+.result-card .donutchart-text-label{
+  font-size:9px;
+}

@@ -161,7 +161,7 @@ class Detail extends Component {
                     <div className="column">
                        <div className="cl-facilityrating cl-boxshadow">
                           <h1 className="title has-text-centered is-size-4">Cleanly Score</h1>
-                          <DonutChart value={this.state.average} />
+                          <DonutChart value={this.state.average} size={200} strokewidth={20} />
                        </div>
                     </div>
                  </div>
@@ -198,7 +198,8 @@ class Detail extends Component {
                               labelsVisible={false}
                               gridVisible={false}
                               axisOpacity={0.5}
-                              viewBoxHeight={550} />
+                              viewBoxHeight={550}
+                              barsColor={"#6f6e88"} />
                           </div>
                        </div>
                     </div>

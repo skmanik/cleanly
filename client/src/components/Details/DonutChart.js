@@ -7,8 +7,8 @@ export class DonutChart extends Component {
         this.state = {
             value: 0,
             valuelabel: 'Completed',
-            size: 200,
-            strokewidth: 20
+            size: this.props.size,
+            strokewidth: this.props.strokewidth
         }
     }
 
