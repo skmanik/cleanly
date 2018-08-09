@@ -8,3 +8,30 @@ body {
     font-size: 1.5rem;
     text-transform: lowercase;
 }
+
+#cl-banner {
+	padding: 1rem 0;
+	position: relative;
+}
+
+.cl-bannerimg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(https://images.unsplash.com/photo-1517638851339-a711cfcf3279?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6b7d3fd7313e179636c1189245a70534&auto=format&fit=crop&w=2550&q=80);
+    background-size: cover;
+    background-position: center;
+    -webkit-filter: contrast(40%) grayscale(50%); 
+    filter: contrast(40%) grayscale(50%);
+}
+
+.cl-banneroverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #3b3a5d87;
+}

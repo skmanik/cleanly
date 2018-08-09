@@ -1,3 +1,32 @@
-.search-container {
-	min-width: 350px;
+#cl-searchinput {
+    min-width: 350px;
+}
+
+#cl-searchname {
+    min-width: 350px;
+}
+
+#cl-searchform {
+    justify-content: center !important;
+}
+
+#cl-searchform select {
+    min-width: 215px;
+}
+
+.cl-searchcontainer {
+    padding-top: 1rem;
+}
+
+#cl-searchsubmit {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.cl-searchcontainer .is-medium {
+    font-size: 105%;
+}
+
+.cl-searchcontainer .button.is-danger {
+	background: #01cecd !important;
 }

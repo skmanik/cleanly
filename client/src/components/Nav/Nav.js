@@ -2,7 +2,7 @@ import React from "react";
 import "./Nav.css";
 import logo from './logo.svg';
 
-const Nav = props => (
+const Nav = () => (
     <nav className="navbar is-transparent" role="navigation" aria-label="main navigation" id="cl-nav">
      <div className="container">
         <div className="navbar-brand">
@@ -19,7 +19,7 @@ const Nav = props => (
            </div>
         </div>
      </div>
-  </nav>
+    </nav>
 );
 
 export default Nav;

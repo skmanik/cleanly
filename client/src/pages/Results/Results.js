@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import queryString from "query-string";
+import Jumbotron from "../../components/Jumbotron";
 import Search from "../../components/Search";
 import Card from "../../components/Card";
 import API from "../../utils/API";
@@ -67,7 +68,7 @@ class Results extends Component {
 						<div className="container">
 							<h1 className="title">Results List</h1>
 							{/* A search bar like the one on the home page */}
-							<Search onSearch={this.searchForBusiness} />
+							<Search onSearch={this.searchForBusiness}  style={{ justifyContent: "flex-start !important", }} />
 						</div>
 					</div>
 				</section>

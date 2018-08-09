@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Search from "../../components/Search";
 import { Carousel, CarItem } from "../../components/Carousel";
 import API from "../../utils/API";
+import "./Home.css";
 
 class Home extends Component {
 	state = {
@@ -37,16 +38,19 @@ class Home extends Component {
 	render() {
 		return (
 			<div>
-				<section className="hero is-primary is-medium">
+				<section className="hero is-info is-transparent is-medium" id="cl-banner">
+					<div className="cl-bannerimg"></div>
+					<div className="cl-banneroverlay"></div>
 					<div className="hero-body">
 						<div className="container">
-							<h1 className="title">Cleanly</h1>
-							{/* A search bar that sends user to results page */}
-							<Search onSearch={this.searchForBusiness} />
+						   <h1 className="title has-text-centered is-size-3 cl-bannertext">
+						      Dining out at a trendy restaurant? See how clean it is first!
+						   </h1>
+						   <Search onSearch={this.searchForBusiness} />
 						</div>
 					</div>
-				</section>
-				<section className="section main">
+		      	</section>
+		      	<section className="section main">
 					<Carousel>
 						{this.state.facilities.map(facility => (
 							<CarItem key={facility.id}>
@@ -57,7 +61,7 @@ class Home extends Component {
 						))}
 					</Carousel>
 				</section>
-			</div>
+	      	</div>
 		);
 	}
 }
