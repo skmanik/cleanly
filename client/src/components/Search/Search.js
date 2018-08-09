@@ -61,7 +61,7 @@ class Search extends Component {
 		        	/>
 			     </p>
 			     <p className="control">
-			        <a className="button is-danger is-medium" id="cl-searchsubmit">Let's go!</a>
+			        <a className="button is-danger is-medium" id="cl-searchsubmit" onClick={this.onSearch}>Let's go!</a>
 			     </p>
 			  </div>
 			</div>

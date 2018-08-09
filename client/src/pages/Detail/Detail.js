@@ -159,7 +159,7 @@ class Detail extends Component {
                        </div>
                     </div>
                     <div className="column">
-                       <div className="cl-facilityrating cl-boxshadow">
+                       <div className="cl-facilityrating box">
                           <h1 className="title has-text-centered is-size-4">Cleanly Score</h1>
                           <DonutChart value={this.state.average} size={200} strokewidth={20} />
                        </div>
