@@ -1,0 +1,31 @@
+#cl-nav {
+    padding: 0.159rem 0;
+    box-shadow: none;
+}
+
+#cl-nav .navbar-menu a:hover,
+#cl-nav .navbar-menu a:active {
+	color: #01cfcd;
+}
+
+#cl-nav .navbar-menu a {
+    font-size: 85%;
+    font-weight: bold;
+    margin: 0 0.3rem;
+}
+
+#cl-logo img {
+	margin-right: 5px;
+}
+
+#cl-logo {
+	color: #4a4a4a !important;
+}
+
+#cl-navsearch {
+    margin-top: 11px !important;
+    background: #01cfcd !important;
+    margin-left: 1rem !important;
+    color: #ffffff !important;
+    border: none;
+}
