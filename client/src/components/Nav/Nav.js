@@ -15,7 +15,7 @@ const Nav = () => (
            <div className="navbar-end">
               <a className="navbar-item" href="/">Home</a>
               <a className="navbar-item" href="/">About</a>
-              <a className="navbar-item button" href="/results" id="cl-navsearch">Search <i class="fas fa-search"></i></a>
+              <a className="navbar-item button" href="/results" id="cl-navsearch">Search <i className="fas fa-search"></i></a>
            </div>
         </div>
      </div>
