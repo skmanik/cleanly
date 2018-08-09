@@ -42,13 +42,14 @@ class Card extends Component {
 							</figure>
 						</div>
 						<div className="media-content">
-							<div className="content">
+							<div className="content cl-cardcontentinner">
 								<p>
 									<strong className="title is-4">{this.state.name}</strong>
 									<br />
-									<small>{this.state.address}, San Francisco, CA</small>
-									<br />
-									<span className="result-rating">Rating: {this.state.rating}</span>
+									<small className="cl-cardlocation">
+										<i class="fas fa-map-marker-alt"></i>
+										<strong>{this.state.address}</strong>, San Francisco, CA
+									</small>
 								</p>
 							</div>
 						</div>
