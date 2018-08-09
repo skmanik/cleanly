@@ -52,7 +52,7 @@ class Home extends Component {
 		      	</section>
 		      	<section className="section main">
 		      		<div class="container">
-		      			<h1 className="title is-size-4 cl-hometitle">High scoring businesses on Cleanly</h1>
+		      			<h1 className="title is-size-4 cl-hometitle">High-scoring businesses on Cleanly</h1>
 	      			</div>
 					<Carousel>
 						{this.state.facilities.map(facility => (
