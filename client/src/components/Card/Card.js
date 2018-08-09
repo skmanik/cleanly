@@ -45,7 +45,7 @@ class Card extends Component {
 								<p>
 									<strong className="title is-4">{this.state.name}</strong>
 									<br />
-									<small>{this.state.address}</small>
+									<small>{this.state.address}, San Francisco, CA</small>
 									<br />
 									<span className="result-rating">Rating: {this.state.rating}</span>
 								</p>

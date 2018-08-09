@@ -49,3 +49,22 @@ body {
     padding-bottom: 1.25rem !important;
     border-bottom: 1px solid #dbdbdb !important;
 }
+
+/* pagination stuff for results */
+
+.pagination {
+    padding: 10px 6rem;
+}
+
+.pagination a {
+    color: #6e6b7d;
+}
+
+.pagination .previous a,
+.pagination .next a {
+    color: #6e6b7d !important;
+}
+
+.pagination .active a {
+    color: #01cfcd !important;
+}
