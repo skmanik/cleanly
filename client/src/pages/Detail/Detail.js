@@ -84,12 +84,12 @@ class Detail extends Component {
     return (
       <div>
         {/* this is the banner */}
-        <section className="hero is-info is-transparent" id="cl-banner">
+        <section className="hero is-info is-transparent" id="cl-detailsbanner">
            <div className="cl-bannerimg"></div>
            <div className="cl-banneroverlay"></div>
            <div className="hero-body">
               <div className="container">
-                 <h1 className="title has-text-centered is-size-3 cl-bannertext">{this.state.name}</h1>
+                 <h1 className="title has-text-centered is-size-3" id="cl-detailsbannertext">{this.state.name}</h1>
               </div>
            </div>
         </section>

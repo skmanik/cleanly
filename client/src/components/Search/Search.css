@@ -6,10 +6,6 @@
     min-width: 350px;
 }
 
-#cl-searchform {
-    justify-content: center !important;
-}
-
 #cl-searchform select {
     min-width: 215px;
 }

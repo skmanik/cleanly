@@ -9,7 +9,7 @@ body {
     text-transform: lowercase;
 }
 
-#cl-banner {
+.cl-banner {
 	padding: 1rem 0;
 	position: relative;
 }

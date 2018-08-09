@@ -38,7 +38,7 @@ class Home extends Component {
 	render() {
 		return (
 			<div>
-				<section className="hero is-info is-transparent is-medium" id="cl-banner">
+				<section className="hero is-info is-transparent is-medium cl-banner">
 					<div className="cl-bannerimg"></div>
 					<div className="cl-banneroverlay"></div>
 					<div className="hero-body">
