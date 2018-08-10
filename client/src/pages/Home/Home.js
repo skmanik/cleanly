@@ -74,8 +74,3 @@ class Home extends Component {
 }
 
 export default Home;
-
-/* 
-<p className="title is-4">{facility.name}</p>
-								<p className="subtitle is-6">{facility.business_address}, {facility.business_city}, {facility.business_state}</p>
-								 <img src={facility.photo} alt={facility.photo} /> */
