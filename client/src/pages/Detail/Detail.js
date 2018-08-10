@@ -155,7 +155,8 @@ class Detail extends Component {
                  <div className="columns">
                     <div className="column is-two-thirds">
                        <div className="cl-facilitybanner cl-box-shadow">
-                          <div className="cl-facilitybannerimg"></div>
+                          <div className="cl-facilitybannerimg" style={{ background: "url(" + this.state.photo + ") 100% 100% / cover" }}>
+                          </div>
                        </div>
                     </div>
                     <div className="column">
@@ -170,39 +171,43 @@ class Detail extends Component {
            <div className="container">
               <div className="cl-risksholder">
                  <div className="columns">
-                    <div className="column is-two-fifths">
-                       <div className="cl-barchart">
-                          <h1 className="title is-size-4">Other scores from this franchise</h1>
-                          <div style={{ position: "relative", }}>
-                            {this.state.tooltipTrigger ? (
-                              <Tooltip
-                                placement="top"
-                                radius={10}
-                                arrow={10}
+                 {this.state.totalFacilities.length > 0 ?
+                    <div>
+                      <div className="column is-two-fifths">
+                         <div className="cl-barchart">
+                            <h1 className="title is-size-4">Other scores from this franchise</h1>
+                            <div style={{ position: "relative", }}>
+                              {this.state.tooltipTrigger ? (
+                                <Tooltip
+                                  placement="top"
+                                  radius={10}
+                                  arrow={10}
 
-                                style={{
-                                  position: "absolute",
-                                  top: this.state.tooltipTrigger.top - 280 + "px",
-                                  left: 
-                                  this.state.tooltipTrigger.left +
-                                  (this.state.tooltipTrigger.right - this.state.tooltipTrigger.left) / 2 +
-                                  -90 + 
-                                  "px",
-                                }}
-                                content={this.state.point.address + "  " + this.state.point.score+"%"}
-                              />
-                            ) : null}
-                            <BarChart 
-                              data={this.state.totalFacilities} 
-                              onHover={this.handlePointHover}
-                              labelsVisible={false}
-                              gridVisible={false}
-                              axisOpacity={0.5}
-                              viewBoxHeight={550}
-                              barsColor={"#6f6e88"} />
-                          </div>
-                       </div>
-                    </div>
+                                  style={{
+                                    position: "absolute",
+                                    top: this.state.tooltipTrigger.top - 280 + "px",
+                                    left: 
+                                    this.state.tooltipTrigger.left +
+                                    (this.state.tooltipTrigger.right - this.state.tooltipTrigger.left) / 2 +
+                                    -90 + 
+                                    "px",
+                                  }}
+                                  content={this.state.point.address + "  " + this.state.point.score+"%"}
+                                />
+                              ) : null}
+                                <BarChart 
+                                  data={this.state.totalFacilities} 
+                                  onHover={this.handlePointHover}
+                                  labelsVisible={false}
+                                  gridVisible={false}
+                                  axisOpacity={0.5}
+                                  viewBoxHeight={550}
+                                  barsColor={"#6f6e88"} 
+                                />
+                            </div>
+                         </div>
+                      </div>
+                      </div> : null }
                     <div className="column">
                        <div className="cl-riskslist">
                           <h1 className="title is-size-4">List of past health violations</h1>
