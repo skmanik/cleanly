@@ -58,7 +58,8 @@ module.exports = {
     });
   },
   findByName: function (req, res) {
-    const url = 'https://data.sfgov.org/resource/sipz-fjte.json?business_name=' + req.params.name;
+    const name = encodeURIComponent(req.params.name.split("'").join("''"));
+    const url = 'https://data.sfgov.org/resource/sipz-fjte.json?business_name=' + name;
 
     request(url, { json: true }, (err, apiResponse, body) => {
       if (err) {
@@ -70,7 +71,6 @@ module.exports = {
     });
   },
   findTop: function (req, res) {
-
     const url = 'https://data.sfgov.org/resource/sipz-fjte.json?$where=inspection_score=100';
 
     request(url, { json: true }, (err, apiResponse, body) => {
@@ -94,7 +94,6 @@ module.exports = {
     });
   },
   findPhotoByName: function (req, res) {
-
     const url = 'https://api.yelp.com/v3/businesses/search?term=' + req.params.name + '&location=' + 'San Francisco';
 
     request.get(
@@ -113,9 +112,14 @@ module.exports = {
       });
   },
   saveComment: function (req, res) {
+    console.log("THIS IS DB!!", db.Facility);
+
     db.Facility
       .create(req.body)
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        console.log("THIS IS THE MODEL!!", dbModel);
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
   },
   findCommentByFacility: function (req, res) {
@@ -258,6 +262,7 @@ const mergeDetailsByName = (businesses, id) => {
 
         temporalFacility.push({
           name: currentBusiness.business_name,
+          business_id: currentBusiness.business_id,
           business_address: currentBusiness.business_address,
           business_city: currentBusiness.business_city,
           business_postal_code: currentBusiness.business_postal_code,
@@ -303,6 +308,7 @@ const mergeDetailsByName = (businesses, id) => {
     facility.push({
       id: iterator,
       name: temporalFacility[iterator].name,
+      business_id: temporalFacility[iterator].business_id,
       business_address: temporalFacility[iterator].business_address,
       business_city: temporalFacility[iterator].business_city,
       business_postal_code: temporalFacility[iterator].business_postal_code,

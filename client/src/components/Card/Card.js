@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { DonutChart } from "../../components/Details";
 import "./Card.css";
 
 class Card extends Component {
@@ -36,18 +37,19 @@ class Card extends Component {
 				<div className="box result-card">
 					<article className="media">
 						<div className="media-left">
-							<figure className="image is-96x96">
-								<img src="https://bulma.io/images/placeholders/128x128.png" alt="Image" />
+							<figure className="">
+								<DonutChart value={this.state.rating} size={100} strokewidth={10} />
 							</figure>
 						</div>
 						<div className="media-content">
-							<div className="content">
+							<div className="content cl-cardcontentinner">
 								<p>
 									<strong className="title is-4">{this.state.name}</strong>
 									<br />
-									<small>{this.state.address}</small>
-									<br />
-									<span className="result-rating">Rating: {this.state.rating}</span>
+									<small className="cl-cardlocation">
+										<i class="fas fa-map-marker-alt"></i>
+										<strong>{this.state.address}</strong>, San Francisco, CA
+									</small>
 								</p>
 							</div>
 						</div>

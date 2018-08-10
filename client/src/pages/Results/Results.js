@@ -62,34 +62,44 @@ class Results extends Component {
 	render() {
 		return (
 			<div>
-				<section className="hero is-primary">
+				<section className="hero is-info is-transparent" id="cl-resultsbanner">
+					<div className="cl-bannerimg"></div>
+					<div className="cl-banneroverlay"></div>
 					<div className="hero-body">
 						<div className="container">
-							<h1 className="title">Results List</h1>
-							{/* A search bar like the one on the home page */}
-							<Search onSearch={this.searchForBusiness} />
+						   <Search onSearch={this.searchForBusiness} />
 						</div>
 					</div>
-				</section>
+		      	</section>
 				<section className="main section">
 					<div className="container">
-						{/* Cards will be generated here */}
-						{this.state.currentViewBusinesses.map(business => (
-							<Card key={business.id} business={business} />
-						))}
-						<ReactPaginate 
-							previousLabel={"previous"}
-                       		nextLabel={"next"}
-                       		breakLabel={<a href="">...</a>}
-                       		breakClassName={"break-me"}
-                       		pageCount={this.state.pageCount}
-                       		marginPagesDisplayed={2}
-                  		 	pageRangeDisplayed={5}
-                       		onPageChange={this.handlePageClick}
-                       		containerClassName={"pagination"}
-                       		subContainerClassName={"pages pagination"}
-                       		activeClassName={"active"} 
-                   		/>
+						<div className="extrapadding">
+							<h1 className="title is-size-4 extraborder" id="cl-srtitle">Search Results</h1>
+							{this.props.location.search ? (null) : (
+								<p><span class="cl-emoji">🧐</span> It seems you haven't searched anything yet... Give it a shot!</p>
+							)}
+
+							{/* Cards will be generated here */}
+							{this.state.currentViewBusinesses.map(business => (
+								<Card key={business.id} business={business} />
+							))}
+
+							{this.props.location.search ? (
+								<ReactPaginate 
+									previousLabel={"«   previous"}
+		                       		nextLabel={"next   »"}
+		                       		breakLabel={<a href="">...</a>}
+		                       		breakClassName={"break-me"}
+		                       		pageCount={this.state.pageCount}
+		                       		marginPagesDisplayed={2}
+		                  		 	pageRangeDisplayed={5}
+		                       		onPageChange={this.handlePageClick}
+		                       		containerClassName={"pagination"}
+		                       		subContainerClassName={"pages pagination"}
+		                       		activeClassName={"active"} 
+	                   			/>
+							) : (null)}
+						</div>
 					</div>
 				</section>
 			</div>

@@ -1,0 +1,31 @@
+.result-card .donutchart {
+	margin-top: 0px;
+	margin-right: 5px;
+}
+
+.result-card .donutchart-text-val{
+  font-size:18px;
+}
+  
+.result-card .donutchart-text-percent{
+  font-size:10px;
+}
+  
+.result-card .donutchart-text-label{
+  font-size:9px;
+}
+
+.result-card .cl-cardlocation {
+    color: #6e6b7d !important;
+}
+
+.result-card .cl-cardlocation > svg {
+    position: relative;
+    top: -2px;
+    margin-right: 2px;
+    color: #01cfcd;
+}
+
+.result-card .cl-cardcontentinner {
+	margin-top: 1.45rem;
+}

@@ -40,23 +40,30 @@ class Search extends Component {
 
 	render() {
 		return (
-			<div>
-				<div className="field has-addons">
-					<div className="control search-container">
-						<input
-							className="input"
-							type="text"
-							placeholder="Enter a facility name..."
-							onChange={this.onInput}
-							onKeyPress={this.handleKeyPress}
-						/>
-					</div>
-					<div className="control">
-						<a onClick={this.onSearch} className="button is-info">
-							Search
-						</a>
-					</div>
-				</div>
+			<div className="cl-searchcontainer" id="cl-searchformfix">
+			  <div className="field has-addons has-addons-right" id="cl-searchform">
+			     <p className="control">
+			        <span className="select is-medium">
+			           <select>
+			              <option>Select a county</option>
+			              <option>San Francisco</option>
+			           </select>
+			        </span>
+			     </p>
+			     <p className="control">
+			        <input 
+			        	onChange={this.onInput} 
+			        	onKeyPress={this.handleKeyPress} 
+			        	className="input is-medium"
+			        	type="text"
+			        	placeholder="Enter a business name..."
+			        	id="cl-searchname"
+		        	/>
+			     </p>
+			     <p className="control">
+			        <a className="button is-danger is-medium" id="cl-searchsubmit" onClick={this.onSearch}>Let's go!</a>
+			     </p>
+			  </div>
 			</div>
 		);
 	};
