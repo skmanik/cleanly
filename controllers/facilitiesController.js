@@ -58,7 +58,8 @@ module.exports = {
     });
   },
   findByName: function (req, res) {
-    const url = 'https://data.sfgov.org/resource/sipz-fjte.json?business_name=' + req.params.name;
+    const name = encodeURIComponent(req.params.name.split("'").join("''"));
+    const url = 'https://data.sfgov.org/resource/sipz-fjte.json?business_name=' + name;
 
     request(url, { json: true }, (err, apiResponse, body) => {
       if (err) {
