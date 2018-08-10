@@ -79,3 +79,10 @@
 .cl-postbutton {
     background: #03d0cd !important;
 }
+
+#cl-detailssubtext > svg {
+    position: relative;
+    top: -2px;
+    margin-right: 5px;
+    color: #01cfcd;
+}

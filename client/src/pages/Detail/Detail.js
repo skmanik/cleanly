@@ -144,6 +144,9 @@ class Detail extends Component {
            <div className="hero-body">
               <div className="container">
                  <h1 className="title has-text-centered is-size-3" id="cl-detailsbannertext">{this.state.name}</h1>
+                 <h2 className="subtitle has-text-centered is-size-5" id="cl-detailssubtext">
+                  <i class="fas fa-map-marker-alt"></i> {this.state.address}
+                </h2>
               </div>
            </div>
         </section>
@@ -172,7 +175,6 @@ class Detail extends Component {
               <div className="cl-risksholder">
                  <div className="columns">
                  {this.state.totalFacilities.length > 0 ?
-                    <div>
                       <div className="column is-two-fifths">
                          <div className="cl-barchart">
                             <h1 className="title is-size-4">Other scores from this franchise</h1>
@@ -206,7 +208,6 @@ class Detail extends Component {
                                 />
                             </div>
                          </div>
-                      </div>
                       </div> : null }
                     <div className="column">
                        <div className="cl-riskslist">
