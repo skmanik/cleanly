@@ -1,4 +1,4 @@
-# cleanly 
+# Cleanly 
 
 An app that uses health inspection data to rate the cleanliness of restaurants around San Francisco.
 
