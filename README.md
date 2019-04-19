@@ -4,6 +4,22 @@ An app that uses health inspection data to rate the cleanliness of restaurants a
 
 Live site: https://murmuring-tor-26400.herokuapp.com/
 
+## My Contributions
+Components (React)
+- https://github.com/skmanik/cleanly/tree/master/client/src/components/Card
+- https://github.com/skmanik/cleanly/tree/master/client/src/components/Carousel
+- https://github.com/skmanik/cleanly/tree/master/client/src/components/Details
+- https://github.com/skmanik/cleanly/tree/master/client/src/components/Search
+
+Pages (React)
+- https://github.com/skmanik/cleanly/blob/master/client/src/pages/Detail/Detail.js
+- https://github.com/skmanik/cleanly/tree/master/client/src/pages/Results
+- https://github.com/skmanik/cleanly/tree/master/client/src/pages/Home
+
+Server-side (Node)
+- https://github.com/skmanik/cleanly/blob/master/routes/api/facilities.js
+- https://github.com/skmanik/cleanly/blob/master/controllers/facilitiesController.js
+
 ## Implementation
 
 * DataSF's SODA API to retrieve restaurant health inspection data and Yelp API to retrieve restaurant photos
